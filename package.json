@@ -1,10 +1,10 @@
 {
   "name": "reading-planner",
   "version": "1.0.0",
-  "description": "",
+  "description": "Generate reading plan based on EPUB file and reading habit interval",
   "preferGlobal": true,
   "main": "index.js",
-  "repository": "git@github.com:Mhdi-kr/text2tree.git",
+  "repository": "git@github.com:Mhdi-kr/reading-planner.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node index.ts",
@@ -15,7 +15,7 @@
   "author": "Mahdi Karimi <mhdi_kr@outlook.com>",
   "license": "ISC",
   "bin": {
-    "text2tree": "./dist/index.js"
+    "reading-planner": "./dist/index.js"
   },
   "devDependencies": {
     "@types/pdf-parse": "^1.1.1",
