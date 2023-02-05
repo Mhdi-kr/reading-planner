@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import readingTime from 'reading-time'
 import { EPub as epub } from 'epub2'
 import * as R from 'rambda'
