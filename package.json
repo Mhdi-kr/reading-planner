@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node index.ts",
     "build": "tsc",
-    "start": "tsc && node dist/index.js ./test/test.epub"
+    "start": "tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "Mahdi Karimi <mhdi_kr@outlook.com>",

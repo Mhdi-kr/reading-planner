@@ -114,7 +114,7 @@ function main(): void {
     epub.createAsync(filePath, '', '').then((EPUB: any) => {
         const chapters = pipeChapters({ toc: EPUB.toc, spine: EPUB.spine.contents })
         mapResolvedChapters(chapters, EPUB).then((rawChapters) => {
-            const events = rawChapters
+            const requirements = rawChapters
                 .map((chapter) => ({
                     ...chapter,
                     raw: normalizeTextPipe(chapter.raw),
@@ -141,26 +141,29 @@ function main(): void {
                         ];
                     }
                 }, [] as { total: { minutes: number }, items: any[] }[])
-                .map((item, i) => {
-                    const date = addDays(Date.now(), i + 7);
-                    return {
-                        start: [
-                            date.getUTCFullYear(),
-                            date.getUTCMonth() + 1,
-                            date.getUTCDate(),
-                            6,
-                            0,
-                        ],
-                        duration: {
-                            hours: Math.floor(item.total.minutes / 60),
-                            minutes: item.total.minutes % 60,
-                        },
-                        title: "Reading Books",
-                        description: item.items.map((i) => i.title).join("\n"),
-                        categories: ["reading"],
-                        busyStatus: "BUSY",
-                    };
-                }) as ics.EventAttributes[];
+
+            console.table(requirements)
+
+            const events = requirements.map((item, i) => {
+                const date = addDays(Date.now(), i + 7);
+                return {
+                    start: [
+                        date.getUTCFullYear(),
+                        date.getUTCMonth() + 1,
+                        date.getUTCDate(),
+                        6,
+                        0,
+                    ],
+                    duration: {
+                        hours: Math.floor(item.total.minutes / 60),
+                        minutes: item.total.minutes % 60,
+                    },
+                    title: "Reading Books",
+                    description: item.items.map((i) => i.title).join("\n"),
+                    categories: ["reading"],
+                    busyStatus: "BUSY",
+                };
+            }) as ics.EventAttributes[];
             ics.createEvents(events, (error, value) => {
                 if (error) {
                     return console.error(error);

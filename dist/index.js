@@ -92,7 +92,7 @@ function main() {
     epub2_1.EPub.createAsync(filePath, '', '').then((EPUB) => {
         const chapters = pipeChapters({ toc: EPUB.toc, spine: EPUB.spine.contents });
         mapResolvedChapters(chapters, EPUB).then((rawChapters) => {
-            const events = rawChapters
+            const requirements = rawChapters
                 .map((chapter) => (Object.assign(Object.assign({}, chapter), { raw: normalizeTextPipe(chapter.raw) })))
                 .map((chapter) => {
                 const read = (0, reading_time_1.default)(chapter.raw);
@@ -112,8 +112,9 @@ function main() {
                         { items: [curr], total: { minutes: curr.read.minutes } },
                     ];
                 }
-            }, [])
-                .map((item, i) => {
+            }, []);
+            console.table(requirements);
+            const events = requirements.map((item, i) => {
                 const date = addDays(Date.now(), i + 7);
                 return {
                     start: [
