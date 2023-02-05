@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import readingTime from 'reading-time'
+import readingTime, { ReadTimeResults } from 'reading-time'
 import { EPub as epub } from 'epub2'
 import * as R from 'rambda'
 import fs from 'fs'
@@ -44,7 +44,8 @@ function resolvePath(uri: string) {
 function hasValidExtension(filePath: string) {
     const VALID_EXTENSIONS = ['.epub']
     const isValid = VALID_EXTENSIONS.reduce((acc, curr) => acc && filePath.endsWith(curr), true)
-    return isValid ? filePath : undefined
+    const doesExist = fs.statSync(filePath).isFile()
+    return (isValid && doesExist) ? filePath : undefined
 }
 
 const filePathPipe = R.pipe(readUserInput, resolvePath, hasValidExtension)
@@ -142,9 +143,19 @@ function main(): void {
                             { items: [curr], total: { minutes: curr.read.minutes } },
                         ];
                     }
-                }, [] as { total: { minutes: number }, items: any[] }[])
+                }, [] as {
+                    total: { minutes: number }, items: {
+                        read: ReadTimeResults;
+                        estimate: number;
+                        raw: string;
+                        title: string;
+                    }[]
+                }[])
 
-            console.table(requirements)
+            console.table(requirements.map(req => ({
+                chapters: req.items.map(i => i.title).join('\n'),
+                estimate: `${req.total.minutes} minutes`
+            })))
 
             const events = requirements.map((item, i) => {
                 const date = addDays(Date.now(), i + 7);

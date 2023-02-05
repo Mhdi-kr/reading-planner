@@ -42,7 +42,8 @@ function resolvePath(uri) {
 function hasValidExtension(filePath) {
     const VALID_EXTENSIONS = ['.epub'];
     const isValid = VALID_EXTENSIONS.reduce((acc, curr) => acc && filePath.endsWith(curr), true);
-    return isValid ? filePath : undefined;
+    const doesExist = fs_1.default.statSync(filePath).isFile();
+    return (isValid && doesExist) ? filePath : undefined;
 }
 const filePathPipe = R.pipe(readUserInput, resolvePath, hasValidExtension);
 function mapChapters(epub) {
@@ -114,7 +115,10 @@ function main() {
                     ];
                 }
             }, []);
-            console.table(requirements);
+            console.table(requirements.map(req => ({
+                chapters: req.items.map(i => i.title).join('\n'),
+                estimate: `${req.total.minutes} minutes`
+            })));
             const events = requirements.map((item, i) => {
                 const date = addDays(Date.now(), i + 7);
                 return {
