@@ -1,0 +1,33 @@
+{
+  "name": "reading-planner",
+  "version": "1.0.0",
+  "description": "",
+  "preferGlobal": true,
+  "main": "index.js",
+  "repository": "git@github.com:Mhdi-kr/text2tree.git",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node index.ts",
+    "build": "tsc",
+    "start": "tsc && node dist/index.js ./test/test.epub"
+  },
+  "keywords": [],
+  "author": "Mahdi Karimi <mhdi_kr@outlook.com>",
+  "license": "ISC",
+  "bin": {
+    "text2tree": "./dist/index.js"
+  },
+  "devDependencies": {
+    "@types/pdf-parse": "^1.1.1",
+    "@types/pdfkit": "^0.12.8",
+    "@types/node": "^18.11.19",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "epub": "^1.2.1",
+    "epub2": "^3.0.1",
+    "ics": "^2.44.0",
+    "rambda": "^7.4.0",
+    "reading-time": "^1.5.0"
+  }
+}
