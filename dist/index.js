@@ -115,6 +115,7 @@ function main() {
                     ];
                 }
             }, []);
+            console.log('you should be able to read each row\'s chapters in the estimated time shown.');
             console.table(requirements.map(req => ({
                 chapters: req.items.map(i => i.title.slice(0, 13).concat('...')),
                 estimate: `${req.total.minutes} minutes`
@@ -144,6 +145,7 @@ function main() {
                     return console.error(error);
                 }
                 fs_1.default.writeFileSync(`${path_1.default.resolve(process.cwd())}/events.ics`, value, "utf-8");
+                console.log('The `events.ics` file is generated. you can import the calendar events straight into your favorite calendar software.');
             });
         });
     });
