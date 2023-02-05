@@ -153,7 +153,7 @@ function main(): void {
                 }[])
 
             console.table(requirements.map(req => ({
-                chapters: req.items.map(i => i.title).join('\n'),
+                chapters: req.items.map(i => i.title.slice(0, 13).concat('...')),
                 estimate: `${req.total.minutes} minutes`
             })))
 
