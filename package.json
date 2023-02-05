@@ -1,6 +1,6 @@
 {
   "name": "reading-planner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate reading plan based on EPUB file and reading habit interval",
   "preferGlobal": true,
   "main": "index.js",
